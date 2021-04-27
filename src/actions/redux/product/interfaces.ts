@@ -60,4 +60,5 @@ export class Product {
 export interface ProductFilter {
 	inStockOnly: boolean;
 	filterText: string;
+	filterIdText:string;
 }

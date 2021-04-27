@@ -38,6 +38,7 @@ class FilterableProductTable extends React.PureComponent<Props & OwnProps, State
 
 		this.handleProductSelected = this.handleProductSelected.bind(this);
 		this.handleFilterTextChange = this.handleFilterTextChange.bind(this);
+		this.handleFilterTextIdChange=this.handleFilterTextIdChange.bind(this);
 		this.handleProductSelected = this.handleProductSelected.bind(this);
 		this.handleInStockChange = this.handleInStockChange.bind(this);
 	}
@@ -58,13 +59,18 @@ class FilterableProductTable extends React.PureComponent<Props & OwnProps, State
 		setFilter({ ...filter, filterText });
 	}
 
+	handleFilterTextIdChange(filterIdText: string) {
+		const { setFilter, filter } = this.props;
+		setFilter({ ...filter, filterIdText });
+	}
+
 	handleInStockChange(inStockOnly: boolean) {
 		const { setFilter, filter } = this.props;
 		setFilter({ ...filter, inStockOnly });
 	}
 
 	render() {
-		const { filter: { filterText, inStockOnly }, products, translate } = this.props;
+		const { filter: { filterText,filterIdText, inStockOnly }, products, translate } = this.props;
 		const { selectedProduct } = this.state;
 
 		return (
@@ -72,9 +78,12 @@ class FilterableProductTable extends React.PureComponent<Props & OwnProps, State
 				<Row>
 					<ProductSearchBar
 						filterText={filterText}
+						filterTextId={filterIdText}
 						inStockOnly={inStockOnly}
 						onFilterTextChange={this.handleFilterTextChange}
+						onFilterTextIdChange={this.handleFilterTextIdChange}
 						onInStockChange={this.handleInStockChange}
+
 					/>
 				</Row>
 				<Row>

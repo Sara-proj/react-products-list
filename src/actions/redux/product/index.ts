@@ -5,7 +5,7 @@ import {
 	ProductState, TypesNames, ActionCreator, SetProductsAction, SetFilterProductAction, SetProductAction, Product
 } from './interfaces';
 import { AnyAction } from 'redux';
-import { sortBy, includes, isEmpty } from 'lodash';
+import { sortBy, includes, isEmpty, isEqual } from 'lodash';
 import { createSelector } from 'reselect';
 import { persistReducer } from 'redux-persist';
 import localStorage from 'redux-persist/lib/storage';
@@ -32,7 +32,8 @@ const INITIAL_STATE = Immutable<ProductState>({
 	products: [],
 	filter: {
 		inStockOnly: true,
-		filterText: ''
+		filterText: '',
+		filterIdText:''
 	},
 	loading: false,
 	success: false,
@@ -44,10 +45,11 @@ const getProducts = (state: ApplicationState) => state.product.products;
 const getFilter = (state: ApplicationState) => state.product.filter;
 const getIsInStock = (state: ApplicationState) => state.product.filter.inStockOnly;
 const getFilterText = (state: ApplicationState) => state.product.filter.filterText;
+const getFilterIdText = (state: ApplicationState) => state.product.filter.filterIdText;
 
-const getProductsList = (products: Product[], inStockOnly: boolean, filterText: string) => {
+const getProductsList = (products: Product[], inStockOnly: boolean, filterText: string,filterIdText:string) => {
 	return products.filter((product: Product) => {
-		if (!isProductContainsText(product, filterText)) return false;
+		if (!isProductContainsText(product, filterText)||!isProductEquals(product, filterIdText)) return false;
 		if (inStockOnly && !product.isInStock) return false;
 		return true;
 	});
@@ -60,8 +62,14 @@ const isProductContainsText = (product: Product, search: string) => {
 	return false;
 };
 
+const isProductEquals = (product: Product, search: string) => {
+	if (isEmpty(search)) return true;
+	if (isEqual(product.id, search)) return true;
+	return false;
+};
+
 const getProductsSelector = createSelector(
-	[getProducts, getIsInStock, getFilterText],
+	[getProducts, getIsInStock, getFilterText,getFilterIdText],
 	getProductsList
 );
 

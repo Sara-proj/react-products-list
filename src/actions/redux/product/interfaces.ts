@@ -15,17 +15,19 @@ export enum TypesNames {
 	CREATE_PRODUCT = 'CREATE_PRODUCT',
 	UPDATE_PRODUCT = 'UPDATE_PRODUCT',
 	SET_PRODUCT = 'SET_PRODUCT',
+	DELETE_PRODUCT='DELETE_PRODUCT',
 	PRODUCT_ERROR = 'PRODUCT_ERROR',
 	LOAD_PRODUCT = 'LOAD_PRODUCT',
 }
 
-export interface ActionCreator {
+export interface 	ActionCreator {
 	getProducts: () => Action<TypesNames.GET_PRODUCTS>;
 	setProducts: (products: Product[]) => SetProductsAction;
 	setFilter: (filter: ProductFilter) => SetFilterProductAction;
 	createProduct: (product: Product) => CreateProductAction;
 	updateProduct: (product: Product) => UpdateProductAction;
 	setProduct: (product: Product) => SetProductAction;
+	deleteProduct:(product:Product)=>DeleteProductAction;
 	loadProduct: () => Action<TypesNames.LOAD_PRODUCT>;
 }
 
@@ -43,6 +45,10 @@ export interface UpdateProductAction extends Action<TypesNames.UPDATE_PRODUCT> {
 	product: Product;
 }
 export interface SetProductAction extends Action<TypesNames.SET_PRODUCT> {
+	product: Product;
+}
+
+export interface DeleteProductAction extends Action<TypesNames.DELETE_PRODUCT> {
 	product: Product;
 }
 

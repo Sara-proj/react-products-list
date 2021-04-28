@@ -2,7 +2,7 @@ import Immutable, { ImmutableObject, from } from 'seamless-immutable';
 import { createReducer, createActions } from 'reduxsauce';
 import { ApplicationState } from '../index';
 import {
-	ProductState, TypesNames, ActionCreator, SetProductsAction, SetFilterProductAction, SetProductAction, Product
+	ProductState, TypesNames, ActionCreator, SetProductsAction, SetFilterProductAction, SetProductAction, Product, DeleteProductAction
 } from './interfaces';
 import { AnyAction } from 'redux';
 import { sortBy, includes, isEmpty, isEqual } from 'lodash';
@@ -20,6 +20,7 @@ const { Creators } = createActions<TypesNames, ActionCreator>({
 	createProduct: ['product'],
 	updateProduct: ['product'],
 	setProduct: ['product'],
+	deleteProduct:['product'], //toask
 	loadProduct: [],
 });
 
@@ -106,6 +107,14 @@ const setProductReducer = (state: ProductState, action: SetProductAction) => {
 	});
 };
 
+const deleteProductReducer = (state: ProductState, action: DeleteProductAction) => {
+	const { product } = action;
+	const newProducts = state.products.filter((p: Product) => p.id !== product.id);
+	return from(state).merge({
+		products: newProducts, loading: false, success: true, error: false
+	});
+};
+
 const setErrorReducer = (state: ProductState) => {
 	return from(state).merge({ loading: false, success: false, error: true });
 };
@@ -121,6 +130,7 @@ const productReducer = createReducer<any, AnyAction>(INITIAL_STATE, {
 	[ProductTypes.SET_PRODUCT]: setProductReducer,
 	[ProductTypes.PRODUCT_ERROR]: setErrorReducer,
 	[ProductTypes.LOAD_PRODUCT]: setLoadReducer,
+	[ProductTypes.DELETE_PRODUCT]:deleteProductReducer
 });
 
 const persistConfig = {

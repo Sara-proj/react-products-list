@@ -16,11 +16,17 @@ function* watchCreateProductSaga() {
 	yield takeEvery(ProductTypes.CREATE_PRODUCT, Sagas.createProduct);
 }
 
+function* watchDeleteProductSaga() {
+	yield takeLatest(ProductTypes.DELETE_PRODUCT, Sagas.deleteProduct);
+}
+
+
 function* productSaga() {
 	yield all([
 		fork(watchProductsSaga),
 		fork(watchCreateProductSaga),
-		fork(watchUpdateProductSaga)
+		fork(watchUpdateProductSaga),
+		fork(watchDeleteProductSaga)
 	]);
 }
 

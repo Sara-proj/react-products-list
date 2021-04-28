@@ -1,3 +1,4 @@
+import { Product } from 'actions/redux/product/interfaces';
 import * as React from 'react';
 import { Form } from 'react-bootstrap';
 

@@ -15,19 +15,21 @@ export enum TypesNames {
 	CREATE_PRODUCT = 'CREATE_PRODUCT',
 	UPDATE_PRODUCT = 'UPDATE_PRODUCT',
 	SET_PRODUCT = 'SET_PRODUCT',
-	DELETE_PRODUCT='DELETE_PRODUCT',
+	DELETE_PRODUCT = 'DELETE_PRODUCT',
+	DELETE_PRODUCT_SAGA = 'DELETE_PRODUCT_SAGA',
 	PRODUCT_ERROR = 'PRODUCT_ERROR',
 	LOAD_PRODUCT = 'LOAD_PRODUCT',
 }
 
-export interface 	ActionCreator {
+export interface ActionCreator {
 	getProducts: () => Action<TypesNames.GET_PRODUCTS>;
 	setProducts: (products: Product[]) => SetProductsAction;
 	setFilter: (filter: ProductFilter) => SetFilterProductAction;
 	createProduct: (product: Product) => CreateProductAction;
 	updateProduct: (product: Product) => UpdateProductAction;
 	setProduct: (product: Product) => SetProductAction;
-	deleteProduct:(productId:string)=>DeleteProductAction;
+	deleteProduct: (productId: string) => DeleteProductAction;
+	deleteProductSaga: (productId: string) => DeleteProductSagaAction;
 	loadProduct: () => Action<TypesNames.LOAD_PRODUCT>;
 }
 
@@ -52,6 +54,10 @@ export interface DeleteProductAction extends Action<TypesNames.DELETE_PRODUCT> {
 	productId: string;
 }
 
+export interface DeleteProductSagaAction extends Action<TypesNames.DELETE_PRODUCT_SAGA> {
+	productId: string;
+}
+
 export class Product {
 	id: string;
 	isInStock: boolean;
@@ -66,5 +72,5 @@ export class Product {
 export interface ProductFilter {
 	inStockOnly: boolean;
 	filterText: string;
-	filterIdText:string;
+	filterIdText: string;
 }

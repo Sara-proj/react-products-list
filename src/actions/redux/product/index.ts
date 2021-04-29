@@ -19,6 +19,7 @@ const { Creators } = createActions<TypesNames, ActionCreator>({
 	createProduct: ['product'],
 	updateProduct: ['product'],
 	setProduct: ['product'],
+	deleteProductSaga: ['productId'],
 	deleteProduct: ['productId'], 
 	loadProduct: [],
 });

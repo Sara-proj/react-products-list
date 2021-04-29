@@ -16,9 +16,9 @@ function* watchCreateProductSaga() {
 	yield takeEvery(ProductTypes.CREATE_PRODUCT, Sagas.createProduct);
 }
 
-// function* watchDeleteProductSaga() {
-// 	yield takeLatest(ProductTypes.DELETE_PRODUCT, Sagas.deleteProduct);
-// }
+function* watchDeleteProductSaga() {
+	yield takeLatest(ProductTypes.DELETE_PRODUCT_SAGA, Sagas.deleteProduct);
+}
 
 
 function* productSaga() {
@@ -26,7 +26,7 @@ function* productSaga() {
 		fork(watchProductsSaga),
 		fork(watchCreateProductSaga),
 		fork(watchUpdateProductSaga),
-		// fork(watchDeleteProductSaga)
+		fork(watchDeleteProductSaga)
 	]);
 }
 

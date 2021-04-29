@@ -121,5 +121,5 @@ export default baseConnect(FilterableProductTable,
 	(dispatch: Dispatch) => ({
 		getProductsList: () => dispatch(ProductActions.getProducts()),
 		setFilter: (filter: ProductFilter) => dispatch(ProductActions.setFilter(filter)),
-		deleteProduct: (productId: string) => dispatch(ProductActions.deleteProduct(productId))
+		deleteProduct: (productId: string) => dispatch(ProductActions.deleteProductSaga(productId))
 	}));

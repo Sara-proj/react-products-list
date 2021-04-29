@@ -3,24 +3,18 @@ import * as React from 'react';
 import { Card } from 'react-bootstrap';
 import { TranslateFunction } from 'react-localize-redux/es';
 import { Link } from 'react-router-dom';
-import { baseConnect } from '@base/features/base-redux-react-connect';
-import { Dispatch } from 'redux';
-import ProductActions, { productSelector } from 'actions/redux/product';
 
 interface Props {
 	product: Product;
 	translate: TranslateFunction;
-}
-interface OwnProps {
-	deleteProduct:(product:Product)=>void;
-
+	deleteProduct: (productId: string) => void;
 }
 
-const ProductView: React.FC<Props> = (props: Props & OwnProps) => {
+const ProductView: React.FC<Props> = (props: Props) => {
 	const { product, translate } = props;
 	const deleteProductHandler = () => {
 		const { deleteProduct } = props;
-		deleteProduct(product);
+		deleteProduct(product.id);
 	}
 	return (
 		<Card>
@@ -36,9 +30,4 @@ const ProductView: React.FC<Props> = (props: Props & OwnProps) => {
 	);
 };
 
-export default baseConnect(ProductView,
-	undefined,
-	(dispatch: Dispatch) => ({
-		deleteProduct:(product:Product)=>dispatch(ProductActions.deleteProduct(product))
-
-	}));
+export default ProductView;

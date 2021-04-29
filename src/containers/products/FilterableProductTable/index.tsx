@@ -22,6 +22,7 @@ interface OwnProps {
 	getProductsList: () => void;
 	filter: ProductFilter;
 	setFilter: (filter: ProductFilter) => void;
+	deleteProduct: (productId: string) => void;
 }
 
 interface State {
@@ -38,9 +39,10 @@ class FilterableProductTable extends React.PureComponent<Props & OwnProps, State
 
 		this.handleProductSelected = this.handleProductSelected.bind(this);
 		this.handleFilterTextChange = this.handleFilterTextChange.bind(this);
-		this.handleFilterTextIdChange=this.handleFilterTextIdChange.bind(this);
+		this.handleFilterTextIdChange = this.handleFilterTextIdChange.bind(this);
 		this.handleProductSelected = this.handleProductSelected.bind(this);
 		this.handleInStockChange = this.handleInStockChange.bind(this);
+		this.handleDeleteProductChange = this.handleDeleteProductChange.bind(this);
 	}
 
 	componentDidMount() {
@@ -69,8 +71,13 @@ class FilterableProductTable extends React.PureComponent<Props & OwnProps, State
 		setFilter({ ...filter, inStockOnly });
 	}
 
+	handleDeleteProductChange(productId: string) {
+		const { deleteProduct } = this.props;
+		deleteProduct(productId);
+	}
+
 	render() {
-		const { filter: { filterText,filterIdText, inStockOnly }, products, translate } = this.props;
+		const { filter: { filterText, filterIdText, inStockOnly }, products, translate } = this.props;
 		const { selectedProduct } = this.state;
 
 		return (
@@ -96,7 +103,7 @@ class FilterableProductTable extends React.PureComponent<Props & OwnProps, State
 						/>
 					</Col>
 					<Col lg={4}>
-						{selectedProduct != null && <ProductView translate={translate} product={selectedProduct} />}
+						{selectedProduct != null && <ProductView translate={translate} product={selectedProduct} deleteProduct={this.handleDeleteProductChange} />}
 					</Col>
 				</Row>
 			</Container>
@@ -113,5 +120,6 @@ export default baseConnect(FilterableProductTable,
 	},
 	(dispatch: Dispatch) => ({
 		getProductsList: () => dispatch(ProductActions.getProducts()),
-		setFilter: (filter: ProductFilter) => dispatch(ProductActions.setFilter(filter))
+		setFilter: (filter: ProductFilter) => dispatch(ProductActions.setFilter(filter)),
+		deleteProduct: (productId: string) => dispatch(ProductActions.deleteProduct(productId))
 	}));

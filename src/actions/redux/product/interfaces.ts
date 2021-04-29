@@ -27,7 +27,7 @@ export interface 	ActionCreator {
 	createProduct: (product: Product) => CreateProductAction;
 	updateProduct: (product: Product) => UpdateProductAction;
 	setProduct: (product: Product) => SetProductAction;
-	deleteProduct:(product:Product)=>DeleteProductAction;
+	deleteProduct:(productId:string)=>DeleteProductAction;
 	loadProduct: () => Action<TypesNames.LOAD_PRODUCT>;
 }
 
@@ -49,7 +49,7 @@ export interface SetProductAction extends Action<TypesNames.SET_PRODUCT> {
 }
 
 export interface DeleteProductAction extends Action<TypesNames.DELETE_PRODUCT> {
-	product: Product;
+	productId: string;
 }
 
 export class Product {

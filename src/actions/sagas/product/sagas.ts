@@ -22,14 +22,14 @@ export function* updateProduct({ product }: UpdateProductAction) {
 	yield put(ProductActions.setProduct(product));
 }
 
-export function* deleteProduct({ product }: DeleteProductAction) {
-	yield call(removeProduct,product);
-	yield put(ProductActions.loadProduct());
-	yield put(ProductActions.deleteProduct(product));
-}
-//toask
-function removeProduct(product:Product){
-	return fetch("http://localhost:55525/api/activity/del?codeA="+product.id).then(response=>
-		console.log(response)
-	);
-}
+// export function* deleteProduct({ product }: DeleteProductAction) {
+// 	yield call(removeProduct,product);
+// 	yield put(ProductActions.loadProduct());
+// 	yield put(ProductActions.deleteProduct(product));
+// }
+// //toask
+// function removeProduct(product:Product){
+// 	return fetch("http://localhost:55525/api/activity/del?codeA="+product.id).then(response=>
+// 		console.log(response)
+// 	);
+// }
